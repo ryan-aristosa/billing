@@ -16,20 +16,21 @@ import java.util.Date;
 public class BaseAuditClass {
 
     @CreatedBy
-    @Column(name="created_by")
+    @Column(name = "created_by")
     private String createdBy;
 
     @CreatedDate
-    @Column(name="created_date")
+    @Column(name = "created_date")
     private Date createdDate;
 
     @LastModifiedBy
-    @Column(name="last_modified_by")
+    @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
     @LastModifiedDate
-    @Column(name="last_modified_date")
+    @Column(name = "last_modified_date")
     private Date lastModifiedDate;
+
 
     public String getCreatedBy() {
         return createdBy;
@@ -62,4 +63,5 @@ public class BaseAuditClass {
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
+
 }
