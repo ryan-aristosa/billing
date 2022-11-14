@@ -1,9 +1,12 @@
 package com.academy.billing.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 
 @Entity
-public class Billing {
+@EntityListeners(AuditingEntityListener.class)
+public class Billing extends BaseAuditClass{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
