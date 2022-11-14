@@ -3,6 +3,7 @@ package com.academy.billing.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -12,7 +13,7 @@ public class Billing extends BaseAuditClass{
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    private Double amount;
+    private BigDecimal amount;
     private String type;
 
     public Long getId() {
