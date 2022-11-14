@@ -7,14 +7,17 @@ import java.math.BigDecimal;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Billing extends BaseAuditClass{
+public class Billing extends BaseAuditClass {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    private Long accountId;
     private String name;
     private BigDecimal amount;
     private String type;
+
 
     public Long getId() {
         return id;
@@ -23,6 +26,15 @@ public class Billing extends BaseAuditClass{
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
     public String getName() {
         return name;
     }

@@ -26,18 +26,18 @@ public class BillingController {
     // Getting all billings
     @GetMapping()
     public ResponseEntity<Page<Billing>> getBilling(Pageable pageable) {
-        Page<Billing> billings = billingService.findAllAccounts(pageable);
+        Page<Billing> billings = billingService.findAllBillings(pageable);
         return new ResponseEntity<>(billings, HttpStatus.OK);
     }
 
-    // Getting employee by id
+    // Getting billing by id
     @GetMapping("/{id}")
     public Billing getBillingById(@PathVariable Long id) throws RecordNotFoundException {
-        return billingService.findAccountById(id);
+        return billingService.findBillingById(id);
     }
 
     @PutMapping("/{id}")
-    public Billing updateEmployee(
+    public Billing updateBilling(
             @PathVariable Long id,
             @RequestBody Billing newBilling
     ) throws RecordNotFoundException {
