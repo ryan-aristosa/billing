@@ -3,7 +3,7 @@ package com.academy.billing.model;
 import javax.persistence.*;
 
 @Entity
-public class Billing {
+public class Billing extends BaseAuditClass{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
