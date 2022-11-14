@@ -18,6 +18,22 @@ public class Billing extends BaseAuditClass {
     private BigDecimal amount;
     private String type;
 
+    public Billing() {
+    }
+
+    public Billing(Long id, Long accountId, String name, BigDecimal amount, String type) {
+        this.id = id;
+        this.accountId = accountId;
+        this.name = name;
+        this.amount = amount;
+        this.type = type;
+    }
+    public Billing(Long accountId, String name, BigDecimal amount, String type) {
+        this.accountId = accountId;
+        this.name = name;
+        this.amount = amount;
+        this.type = type;
+    }
 
     public Long getId() {
         return id;
