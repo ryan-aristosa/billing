@@ -1,9 +1,8 @@
-package com.academy.billing;
+package com.academy.billing.service;
 
+import com.academy.billing.enums.BillingType;
 import com.academy.billing.model.Billing;
 import com.academy.billing.repository.BillingRepository;
-import com.academy.billing.service.BillingService;
-import com.academy.billing.service.BillingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +21,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class BillingServiceTests {
+public class BillingServiceTest {
 
     @Mock
     private BillingRepository billingRepository;
@@ -37,16 +35,16 @@ public class BillingServiceTests {
     private Billing hajime;
     private Billing roronoa;
     private List<Billing> billings;
-    
-    
-    @BeforeEach 
+
+
+    @BeforeEach
     public void setup() {
         BigDecimal value = new BigDecimal("100.00");
         BigDecimal value2 = new BigDecimal("200.00");
         BigDecimal value3 = new BigDecimal("300.00");
-        baqui = new Billing(10001L, 101L, "Baqui", value, "PAPER");
-        hajime = new Billing(10002L, 102L, "Hajime", value2, "ELECTRONICS");
-        roronoa = new Billing(10003L, 103L, "Zoro", value3, "PAPER");
+        baqui = new Billing(10001L, 1001L, "Baqui", value, BillingType.PAPER);
+        hajime = new Billing(10002L, 1002L, "Hajime", value2, BillingType.ELECTRONIC);
+        roronoa = new Billing(10003L, 1003L, "Zoro", value3, BillingType.PAPER);
         billings = List.of(baqui, hajime, roronoa);
     }
 
@@ -81,14 +79,10 @@ public class BillingServiceTests {
 
     @Test
     public void testUpdateBilling(){
-        Mockito.when(billingRepository.findById(10001L))
-            .thenReturn(Optional.ofNullable(baqui));
-
-        Mockito.when(billingRepository.save(baqui))
-                .thenReturn(baqui);
-
+        Mockito.when(billingRepository.findById(10001L)).thenReturn(Optional.ofNullable(baqui));
+        Mockito.when(billingRepository.save(baqui)).thenReturn(baqui);
         BigDecimal amount = new BigDecimal("400.00");
-        Billing newBaqui = new Billing(10001L, 10001L, "Trafalgar", amount, "Electronics");
+        Billing newBaqui = new Billing(10001L, 1001L, "Baqui", amount, BillingType.ELECTRONIC);
 
         Billing updateBilling = billingService.updateBilling(10001L, newBaqui);
 
@@ -96,11 +90,12 @@ public class BillingServiceTests {
     }
     @Test
     public void testDeleteBilling(){
-        Mockito.when(billingRepository.findById(10001L)).thenReturn(Optional.ofNullable(baqui));
+        Long idToDelete = 10001L;
+        Mockito.when(billingRepository.findById(idToDelete)).thenReturn(Optional.ofNullable(baqui));
 
-        billingService.deleteBilling(10001L);
+        Long deletedBilling = billingService.deleteBilling(10001L);
 
-        verify(billingRepository).delete(baqui);
+        assertEquals(deletedBilling, idToDelete);
     }
 
 }

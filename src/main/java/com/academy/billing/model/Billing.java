@@ -21,10 +21,12 @@ public class Billing extends BaseAuditClass {
     @GeneratedValue(generator = "idSeqGen")
     @Column(name = "id", nullable = false)
     private Long id;
+
     private Long accountId;
     private String accountName;
     private BigDecimal amount;
+
     @Enumerated(value = EnumType.STRING)
-    private BillingType billingType;
+    private BillingType type = BillingType.PAPER;
 
 }
