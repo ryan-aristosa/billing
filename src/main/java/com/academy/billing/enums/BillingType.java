@@ -1,5 +1,7 @@
 package com.academy.billing.enums;
 
 public enum BillingType {
-    ELECTRONIC, PAPER
+
+    PAPER, ELECTRONIC
+
 }
