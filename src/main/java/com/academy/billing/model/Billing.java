@@ -10,14 +10,23 @@ import java.math.BigDecimal;
 public class Billing extends BaseAuditClass {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "idSeqGen", sequenceName = "idSeq", initialValue = 10001)
+    @GeneratedValue(generator = "idSeqGen")
     @Column(name = "id", nullable = false)
     private Long id;
     private Long accountId;
-    private String name;
+    private String accountName;
     private BigDecimal amount;
     private String type;
 
+
+    public Billing(Long id, Long accountId, String accountName, BigDecimal amount, String type) {
+        this.id = id;
+        this.accountId = accountId;
+        this.accountName = accountName;
+        this.amount = amount;
+        this.type = type;
+    }
 
     public Long getId() {
         return id;
@@ -35,12 +44,12 @@ public class Billing extends BaseAuditClass {
         this.accountId = accountId;
     }
 
-    public String getName() {
-        return name;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public BigDecimal getAmount() {
