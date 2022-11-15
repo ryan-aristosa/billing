@@ -19,8 +19,9 @@ public class BillingController {
 
 
     @PostMapping()
-    public Billing saveBilling(@RequestBody Billing billing) {
-        return billingService.saveBilling(billing);
+    public ResponseEntity<Billing> saveBilling(@RequestBody Billing billing) {
+        Billing saveBilling = billingService.saveBilling(billing);
+        return new ResponseEntity<>(saveBilling, HttpStatus.OK);
     }
 
     // Getting all billings
@@ -32,21 +33,24 @@ public class BillingController {
 
     // Getting billing by id
     @GetMapping("/{id}")
-    public Billing getBillingById(@PathVariable Long id) throws RecordNotFoundException {
-        return billingService.findBillingById(id);
+    public ResponseEntity<Billing> getBillingById(@PathVariable Long id) throws RecordNotFoundException {
+        Billing billingById = billingService.findBillingById(id);
+        return new ResponseEntity<>(billingById, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Billing updateBilling(
+    public ResponseEntity<Billing> updateBilling(
             @PathVariable Long id,
             @RequestBody Billing newBilling
     ) throws RecordNotFoundException {
-        return billingService.updateBilling(id, newBilling);
+        Billing update = billingService.updateBilling(id, newBilling);
+        return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
-        billingService.deleteBilling(id);
+    public ResponseEntity<Boolean> deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
+        Boolean delete = billingService.deleteBilling(id);
+        return new ResponseEntity<>(delete, HttpStatus.OK);
     }
 
 }
