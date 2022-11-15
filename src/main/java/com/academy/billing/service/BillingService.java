@@ -13,8 +13,8 @@ public interface BillingService {
 
     Billing findBillingById(Long id) throws RecordNotFoundException;
 
-    Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException;
+    Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException ;
 
-    void deleteBilling(Long id) throws RecordNotFoundException;
+    boolean deleteBilling(Long id) throws RecordNotFoundException;
 
 }

@@ -29,35 +29,48 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public Billing findBillingById(Long id) throws RecordNotFoundException {
-        Optional<Billing> billingOptional = billingRepository.findById(id);
-        if (billingOptional.isPresent()) {
-            return billingOptional.get();
-        } else {
-            throw new RecordNotFoundException();
-        }
+        return billingRepository.findById(id).orElseThrow(RecordNotFoundException::new);
+
+//        Optional<Billing> billingOptional = billingRepository.findById(id);
+//        if (billingOptional.isPresent()) {
+//            return billingOptional.get();
+//        } else {
+//            throw new RecordNotFoundException();
+//        }
     }
 
     @Override
     public Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException {
-        Optional<Billing> billingOptional = billingRepository.findById(id);
-        if (billingOptional.isPresent()) {
-            Billing billing = billingOptional.get();
+        return billingRepository.findById(id).map(billing -> {
             billing.setAmount(newBilling.getAmount());
             billing.setType(newBilling.getType());
             return billingRepository.save(billing);
-        } else {
-            throw new RecordNotFoundException();
-        }
+        }).orElseThrow(RecordNotFoundException::new);
+
+//        Optional<Billing> billingOptional = billingRepository.findById(id);
+//        if (billingOptional.isPresent()) {
+//            Billing billing = billingOptional.get();
+//            billing.setAmount(newBilling.getAmount());
+//            billing.setType(newBilling.getType());
+//            return billingRepository.save(billing);
+//        } else {
+//            throw new RecordNotFoundException();
+//        }
     }
 
     @Override
-    public void deleteBilling(Long id) throws RecordNotFoundException {
-        Optional<Billing> billingOptional = billingRepository.findById(id);
-        if (billingOptional.isPresent()) {
-            billingRepository.delete(billingOptional.get());
-        } else {
-            throw new RecordNotFoundException();
-        }
+    public boolean deleteBilling(Long id) throws RecordNotFoundException {
+        return billingRepository.findById(id).map(billing -> {
+            billingRepository.delete(billing);
+            return true;
+        }).orElseThrow(RecordNotFoundException::new);
+
+//        Optional<Billing> billingOptional = billingRepository.findById(id);
+//        if (billingOptional.isPresent()) {
+//            billingRepository.delete(billingOptional.get());
+//        } else {
+//            throw new RecordNotFoundException();
+//        }
     }
 
 }
