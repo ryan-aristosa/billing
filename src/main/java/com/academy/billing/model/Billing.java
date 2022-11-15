@@ -30,6 +30,7 @@ public class Billing extends BaseAuditClass {
         this.type = type;
     }
 
+
     public Long getId() {
         return id;
     }
