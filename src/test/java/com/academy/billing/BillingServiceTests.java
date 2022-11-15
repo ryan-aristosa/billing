@@ -22,26 +22,42 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class BillingServiceTests {
+
     @Mock
     private BillingRepository billingRepository;
 
     @InjectMocks
     private BillingService billingService = new BillingServiceImpl();
-    BigDecimal value = new BigDecimal("100.00");
-    BigDecimal value2 = new BigDecimal("200.00");
-    BigDecimal value3 = new BigDecimal("300.00");
 
-    Billing Baqui = new Billing(1L, 1L, "baqui", value, "paper");
-    Billing Hajime = new Billing(2L, 2L, "hajime", value2, "electronics");
-    Billing Roronoa = new Billing(3L, 3L, "zoro", value3, "paper");
-    List<Billing> billings = List.of(Baqui, Hajime, Roronoa);
+    private Billing baqui;
+    private Billing hajime;
+    private Billing roronoa;
+    private List<Billing> billings;
+    
+    
+    @BeforeEach 
+    public void setup() {
+        BigDecimal value = new BigDecimal("100.00");
+        BigDecimal value2 = new BigDecimal("200.00");
+        BigDecimal value3 = new BigDecimal("300.00");
+        baqui = new Billing(10001L, 101L, "Baqui", value, "PAPER");
+        hajime = new Billing(10002L, 102L, "Hajime", value2, "ELECTRONICS");
+        roronoa = new Billing(10003L, 103L, "Zoro", value3, "PAPER");
+        billings = List.of(baqui, hajime, roronoa);
+    }
 
+    @Test
+    public void testSaveBilling() {
+        Mockito.when(billingRepository.save(baqui)).thenReturn(baqui);
+
+        Billing saveBilling = billingService.saveBilling(baqui);
+
+        assertEquals(saveBilling, baqui);
+    }
 
     @Test
     public void testFindAllBillings() {
@@ -51,54 +67,40 @@ public class BillingServiceTests {
 
         Page<Billing> allBillings = billingService.findAllBillings(pageable);
 
-        assertThat(allBillings).contains(Baqui, Hajime, Roronoa);
-
+        assertThat(allBillings).contains(baqui, hajime, roronoa);
     }
 
     @Test
     public void testFindBillingById() {
-        Mockito.when(billingRepository.findById(Baqui.getId()))
-                .thenReturn(Optional.ofNullable(Baqui));
+        Mockito.when(billingRepository.findById(baqui.getId())).thenReturn(Optional.ofNullable(baqui));
 
-        Billing billingById = billingService.findBillingById(1L);
+        Billing billingById = billingService.findBillingById(10001L);
 
-        assertEquals(billingById, Baqui);
-    }
-
-    @Test
-    public void testSaveBilling() {
-        Mockito.when(billingRepository.save(Baqui))
-                .thenReturn(Baqui);
-
-        Billing saveBilling = billingService.saveBilling(Baqui);
-
-        assertEquals(saveBilling, Baqui);
+        assertEquals(billingById, baqui);
     }
 
     @Test
     public void testUpdateBilling(){
-        Mockito.when(billingRepository.findById(1L))
-            .thenReturn(Optional.ofNullable(Baqui));
+        Mockito.when(billingRepository.findById(10001L))
+            .thenReturn(Optional.ofNullable(baqui));
 
-        Mockito.when(billingRepository.save(Baqui))
-                .thenReturn(Baqui);
-
+        Mockito.when(billingRepository.save(baqui))
+                .thenReturn(baqui);
 
         BigDecimal amount = new BigDecimal("400.00");
-        Billing newBaqui = new Billing(1L, 1L, "Trafalgar", amount, "Electronics");
+        Billing newBaqui = new Billing(10001L, 10001L, "Trafalgar", amount, "Electronics");
 
-        Billing updateBilling = billingService.updateBilling(1L, newBaqui);
+        Billing updateBilling = billingService.updateBilling(10001L, newBaqui);
 
-        assertEquals(Baqui, updateBilling);
+        assertEquals(baqui, updateBilling);
     }
     @Test
     public void testDeleteBilling(){
+        Mockito.when(billingRepository.findById(10001L)).thenReturn(Optional.ofNullable(baqui));
 
-        Mockito.when(billingRepository.findById(1L))
-                .thenReturn(Optional.ofNullable(Baqui));
+        billingService.deleteBilling(10001L);
 
-        billingService.deleteBilling(1L);
-
-        verify(billingRepository).delete(Baqui);
+        verify(billingRepository).delete(baqui);
     }
+
 }
