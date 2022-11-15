@@ -1,5 +1,6 @@
 package com.academy.billing.model;
 
+import com.academy.billing.enums.BillingType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Billing extends BaseAuditClass {
     private Long accountId;
     private String accountName;
     private BigDecimal amount;
-    private String type;
+    @Enumerated(value = EnumType.STRING)
+    private BillingType billingType;
 
 }
