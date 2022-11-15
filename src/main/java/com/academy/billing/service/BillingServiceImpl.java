@@ -38,7 +38,7 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public Billing updateBilling(Long id, Billing newBilling) {
+    public Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException {
         Optional<Billing> billingOptional = billingRepository.findById(id);
         if (billingOptional.isPresent()) {
             Billing billing = billingOptional.get();
@@ -51,7 +51,7 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public void deleteBilling(Long id) {
+    public void deleteBilling(Long id) throws RecordNotFoundException {
         Optional<Billing> billingOptional = billingRepository.findById(id);
         if (billingOptional.isPresent()) {
             billingRepository.delete(billingOptional.get());
