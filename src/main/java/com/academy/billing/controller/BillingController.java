@@ -48,9 +48,9 @@ public class BillingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
-        Long billingId = billingService.deleteBilling(id);
-        return new ResponseEntity<>(billingId, HttpStatus.OK);
+    public ResponseEntity<?> deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
+        billingService.deleteBilling(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

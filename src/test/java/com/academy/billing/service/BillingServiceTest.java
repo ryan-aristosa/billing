@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class BillingServiceTest {
@@ -94,9 +95,9 @@ public class BillingServiceTest {
         Long idToDelete = 10001L;
         Mockito.when(billingRepository.findById(idToDelete)).thenReturn(Optional.ofNullable(baqui));
 
-        Long deletedBilling = billingService.deleteBilling(10001L);
+        billingService.deleteBilling(10001L);
 
-        assertEquals(deletedBilling, idToDelete);
+        verify(billingRepository).delete(baqui);
     }
 
 }
