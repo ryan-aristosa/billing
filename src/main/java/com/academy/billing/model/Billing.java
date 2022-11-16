@@ -10,15 +10,14 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Billing extends BaseAuditClass {
+public class Billing {
 
     @Id
     @SequenceGenerator(name = "idSeqGen", sequenceName = "idSeq", initialValue = 10001)
-    @GeneratedValue(generator = "idSeqGen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idSeq")
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -27,6 +26,6 @@ public class Billing extends BaseAuditClass {
     private BigDecimal amount;
 
     @Enumerated(value = EnumType.STRING)
-    private BillingType type = BillingType.PAPER;
+    private BillingType type;
 
 }
