@@ -1,5 +1,6 @@
 package com.academy.billing.service;
 
+import com.academy.billing.enums.UserType;
 import com.academy.billing.model.UserEntity;
 import com.academy.billing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,14 @@ public class UserServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid user");
         }
-        return new User(user.getUsername(), user.getPassword(), getAuthority());
+        return new User(user.getUsername(), user.getPassword(), getAuthority(user));
     }
 
-    private List<SimpleGrantedAuthority> getAuthority() {
-        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    private List<SimpleGrantedAuthority> getAuthority(UserEntity user) {
+        if (user.getType() == UserType.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
 }

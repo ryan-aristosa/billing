@@ -18,8 +18,8 @@ VALUES
     (10015, 1009, 'Boa', 1500000.0, 'PAPER');
 
 INSERT INTO USER_ENTITY
-    (id, username, password)
+    (id, username, password, type)
 VALUES
-    (1, 'Ryan123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu'),
-    (2, 'Baqui123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu'),
-    (3, 'Justin123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu');
+    (1, 'Ryan123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'ADMIN'),
+    (2, 'Baqui123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'USER'),
+    (3, 'Justin123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'USER');

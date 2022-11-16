@@ -1,6 +1,8 @@
 package com.academy.billing.configuration;
 
+import com.academy.billing.enums.UserType;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -24,10 +26,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.
                 anonymous().disable()
                 .authorizeRequests()
-                .antMatchers("/billing/**").access("hasRole('ADMIN')")
+//                .antMatchers("/billing/**").access("hasRole('ADMIN')")
+                .antMatchers("/billing/**").hasRole(UserType.ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/billing/{id}").access("hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         // To view h2 console
-        // http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable();
     }
 
 }
