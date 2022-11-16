@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -39,16 +40,17 @@ public class BillingControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private final BigDecimal amount1 = new BigDecimal("200.09");
-    private final BigDecimal amount2 = new BigDecimal("400.09");
-    private final BigDecimal amountUpdate = new BigDecimal("500.1");
     private Billing test1, test2;
+    private Long id;
 
 
     @BeforeEach
     void setup() {
+        BigDecimal amount1 = new BigDecimal("200.09");
+        BigDecimal amount2 = new BigDecimal("400.09");
         test1 = new Billing(10001L, 1001L, "test1", amount1, BillingType.PAPER);
-        test2 = new Billing(10002L, 2L, "test2", amount2, BillingType.ELECTRONIC);
+        test2 = new Billing(10002L, 1002L, "test2", amount2, BillingType.ELECTRONIC);
+        id = 10001L;
     }
 
     @Test
@@ -78,27 +80,28 @@ public class BillingControllerTest {
         when(billingServiceImpl.findBillingById(anyLong())).thenReturn(test1);
         //act
         // assert
-        mockMvc.perform(get("/billing/{id}", 10001L)).andExpect(status().isOk())
+        mockMvc.perform(get("/billing/{id}", id))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(test1.getId()))
                 .andExpect(jsonPath("$.accountName").value(test1.getAccountName()))
                 .andExpect(jsonPath("$.amount").value(test1.getAmount()));
-
     }
 
     @Test
     @DisplayName("GIVEN the BillingRepository" +
-            "WHEN findAllBillings() is executed" +
-            "THEN result should return allBilling")
+            "WHEN findAllBillings() is executed " +
+            "THEN result should return all billings")
     void testGetBilling() throws Exception {
         //arrange
-        Pageable pageable = PageRequest.of(0,20);
         List<Billing> billingList = List.of(test1, test2);
+        Pageable pageable = PageRequest.of(0,20);
         Page<Billing> billings = new PageImpl<>(billingList, pageable, billingList.size());
         when(billingServiceImpl.findAllBillings(pageable)).thenReturn(billings);
         //act
         // assert
         mockMvc.perform(get("/billing")
-                        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content.[0].id").value(test1.getId()))
                 .andExpect(jsonPath("$.content.[0].accountName").value(test1.getAccountName()))
                 .andExpect(jsonPath("$.content.[0].amount").value(test1.getAmount()))
@@ -108,16 +111,17 @@ public class BillingControllerTest {
     }
 
     @Test
-    @DisplayName("GIVEN the Id=10001L " +
-            "WHEN updateBilling() is executed " +
+    @DisplayName("GIVEN the BillingRepository " +
+            "WHEN updateBilling() is executed with value = 10001L " +
             "THEN result should return the updated test1")
     void testUpdateBilling() throws Exception {
         //arrange
+        BigDecimal amountUpdate = new BigDecimal("500.1");
         test1.setAmount(amountUpdate);
         when(billingServiceImpl.updateBilling(anyLong(), any(Billing.class))).thenReturn(test1);
         //act
         //assert
-        mockMvc.perform(put("/billing/{id}", 10001L)
+        mockMvc.perform(put("/billing/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(test1)))
                 .andExpect(status().isOk())
@@ -125,18 +129,18 @@ public class BillingControllerTest {
     }
 
     @Test
-    @DisplayName("GIVEN the Id=10001L " +
-            "WHEN deleteBilling() is executed " +
-            "THEN result should return the updated test1")
+    @DisplayName("GIVEN the BillingRepository " +
+            "WHEN deleteBilling() is executed with value = 10001L " +
+            "THEN result should return the id of deleted test1")
     void testDeleteBilling() throws Exception {
         //arrange
-        when(billingServiceImpl.deleteBilling(anyLong())).thenReturn(test1.getId());
+        doNothing().when(billingServiceImpl).deleteBilling(id);
         //act
         //assert
-        mockMvc.perform(delete("/billing/{id}", 10001L)
+        mockMvc.perform(delete("/billing/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(test1)))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
 }

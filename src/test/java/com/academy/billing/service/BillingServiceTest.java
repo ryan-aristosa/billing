@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class BillingServiceTest {
@@ -39,10 +40,10 @@ public class BillingServiceTest {
 
     @BeforeEach
     public void setup() {
-        BigDecimal value = new BigDecimal("100.00");
+        BigDecimal value1 = new BigDecimal("100.00");
         BigDecimal value2 = new BigDecimal("200.00");
         BigDecimal value3 = new BigDecimal("300.00");
-        baqui = new Billing(10001L, 1001L, "Baqui", value, BillingType.PAPER);
+        baqui = new Billing(10001L, 1001L, "Baqui", value1, BillingType.PAPER);
         hajime = new Billing(10002L, 1002L, "Hajime", value2, BillingType.ELECTRONIC);
         roronoa = new Billing(10003L, 1003L, "Zoro", value3, BillingType.PAPER);
         billings = List.of(baqui, hajime, roronoa);
@@ -88,14 +89,15 @@ public class BillingServiceTest {
 
         assertEquals(baqui, updateBilling);
     }
+
     @Test
     public void testDeleteBilling(){
         Long idToDelete = 10001L;
         Mockito.when(billingRepository.findById(idToDelete)).thenReturn(Optional.ofNullable(baqui));
 
-        Long deletedBilling = billingService.deleteBilling(10001L);
+        billingService.deleteBilling(10001L);
 
-        assertEquals(deletedBilling, idToDelete);
+        verify(billingRepository).delete(baqui);
     }
 
 }
