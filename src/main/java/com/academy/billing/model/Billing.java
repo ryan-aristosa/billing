@@ -10,10 +10,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Billing {
+public class Billing extends BaseAuditClass{
 
     @Id
     @SequenceGenerator(name = "idSeqGen", sequenceName = "idSeq", initialValue = 10001)
