@@ -26,9 +26,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.
                 anonymous().disable()
                 .authorizeRequests()
-//                .antMatchers("/billing/**").access("hasRole('ADMIN')")
-                .antMatchers("/billing/**").hasRole(UserType.ADMIN.toString())
-                .antMatchers(HttpMethod.GET, "/billing/{id}").access("hasRole('USER')")
+                .antMatchers(HttpMethod.POST, "/billing/**").hasRole(UserType.ADMIN.toString())
+                .antMatchers(HttpMethod.PUT, "/billing/**").hasRole(UserType.ADMIN.toString())
+                .antMatchers(HttpMethod.DELETE, "/billing/**").hasRole(UserType.ADMIN.toString())
+                .antMatchers(HttpMethod.GET, "/billing/**").hasAnyRole(UserType.ADMIN.toString(), UserType.USER.toString())
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         // To view h2 console
         http.headers().frameOptions().disable();
