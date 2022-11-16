@@ -20,6 +20,7 @@ VALUES
 INSERT INTO USER_ENTITY
     (id, username, password, type)
 VALUES
-    (1, 'Ryan123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'ADMIN'),
-    (2, 'Baqui123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'USER'),
-    (3, 'Justin123', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'USER');
+    (1, 'ruan7', '$2a$10$AZLmzE8nM4BPOmtZiZ7hD../GMTzll7DbFg.RWBAqiIE9kWN5OAzO', 'ADMIN'),
+    (2, 'JamesReid', '$2a$10$5ifyPyARMD6XEPJHvV53U.E57OcUWVjtDehHZsBRFvC.jEFzFGUlq', 'USER'),
+    (3, 'Justin10', '$2a$10$CbmoSZr1A/9086A3QNlAguB85eQUS92cUMf1xRITSCS/bFBt6QvwC', 'USER'),
+    (4, 'Dummy', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'USER');
