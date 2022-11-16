@@ -85,26 +85,27 @@ public class BillingControllerTest {
 
     }
 
-//    @Test
-//    @DisplayName("GIVEN the BillingRepository" +
-//            "WHEN findAllBillings() is executed" +
-//            "THEN result should return allBilling")
-//    void testGetBilling() throws Exception {
-//        //arrange
-//        Pageable pageable = PageRequest.of(0,5);
-//        List<Billing> billingList = List.of(test1, test2);
-//        Page<Billing> billings = new PageImpl<>(billingList, pageable, billingList.size());
-//        when(billingServiceImpl.findAllBillings(pageable)).thenReturn(billings);
-//        //act
-//        // assert
-//        mockMvc.perform(get("/billing")).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.[0].id").value(test1.getId()))
-//                .andExpect(jsonPath("$.[0].accountName").value(test1.getAccountName()))
-//                .andExpect(jsonPath("$.[0].amount").value(test1.getAmount()))
-//                .andExpect(jsonPath("$.[1].id").value(test2.getId()))
-//                .andExpect(jsonPath("$.[1].accountName").value(test2.getAccountName()))
-//                .andExpect(jsonPath("$.[1].amount").value(test2.getAmount()));
-//    }
+    @Test
+    @DisplayName("GIVEN the BillingRepository" +
+            "WHEN findAllBillings() is executed" +
+            "THEN result should return allBilling")
+    void testGetBilling() throws Exception {
+        //arrange
+        Pageable pageable = PageRequest.of(0,20);
+        List<Billing> billingList = List.of(test1, test2);
+        Page<Billing> billings = new PageImpl<>(billingList, pageable, billingList.size());
+        when(billingServiceImpl.findAllBillings(pageable)).thenReturn(billings);
+        //act
+        // assert
+        mockMvc.perform(get("/billing")
+                        .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+                .andExpect(jsonPath("$.content.[0].id").value(test1.getId()))
+                .andExpect(jsonPath("$.content.[0].accountName").value(test1.getAccountName()))
+                .andExpect(jsonPath("$.content.[0].amount").value(test1.getAmount()))
+                .andExpect(jsonPath("$.content.[1].id").value(test2.getId()))
+                .andExpect(jsonPath("$.content.[1].accountName").value(test2.getAccountName()))
+                .andExpect(jsonPath("$.content.[1].amount").value(test2.getAmount()));
+    }
 
     @Test
     @DisplayName("GIVEN the Id=10001L " +
