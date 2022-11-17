@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserEntity findUserEntityById(Long id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User"));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             user.setUsername(newUserEntity.getUsername());
             user.setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
             return userRepository.save(user);
-        }).orElseThrow(UserNotFoundException::new);
+        }).orElseThrow(() -> new UserNotFoundException("User"));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findById(id).map(userEntity -> {
             userRepository.delete(userEntity);
             return userEntity.getUsername();
-        }).orElseThrow(UserNotFoundException::new);
+        }).orElseThrow(() -> new UserNotFoundException("User"));
     }
 
 }
