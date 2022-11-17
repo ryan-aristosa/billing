@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserEntity saveUserEntity(UserEntity userEntity) {
+        userEntity.setPassword(new BCryptPasswordEncoder().encode(userEntity.getPassword()));
         return userRepository.save(userEntity);
     }
 
@@ -55,10 +57,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserEntity updateUserEntity(Long id, UserEntity newUserEntity) throws UserNotFoundException {
-        return userRepository.findById(id).map(billing -> {
-            billing.setUsername(newUserEntity.getUsername());
-            billing.setPassword(newUserEntity.getPassword());
-            return userRepository.save(billing);
+        return userRepository.findById(id).map(user -> {
+            user.setUsername(newUserEntity.getUsername());
+            user.setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
+            return userRepository.save(user);
         }).orElseThrow(UserNotFoundException::new);
     }
 
