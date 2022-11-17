@@ -1,6 +1,6 @@
 package com.academy.billing.enums;
 
-public enum UserType {
+public enum Role {
 
     USER, ADMIN
 
