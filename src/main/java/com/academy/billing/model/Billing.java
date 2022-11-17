@@ -17,8 +17,8 @@ import java.math.BigDecimal;
 public class Billing extends BaseAuditClass{
 
     @Id
-    @SequenceGenerator(name = "idSeqGen", sequenceName = "idSeq", initialValue = 10001)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "idSeq")
+    @SequenceGenerator(name = "billingIdSeqGen", sequenceName = "billingIdSeq", initialValue = 10001)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "billingIdSeq")
     @Column(name = "id", nullable = false)
     private Long id;
 
