@@ -41,11 +41,10 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public Long deleteBilling(Long id) throws RecordNotFoundException {
-        billingRepository.findById(id).map(billing -> {
+        return billingRepository.findById(id).map(billing -> {
             billingRepository.delete(billing);
-            return 0;
+            return billing.getId();
         }).orElseThrow(RecordNotFoundException::new);
-        return id;
     }
 
 }

@@ -49,7 +49,6 @@ public class BillingController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
-
         Long idToDelete = billingService.deleteBilling(id);
         String deleteNotification = "Billing " + idToDelete + " has been deleted.";
         return new ResponseEntity<>(deleteNotification, HttpStatus.OK);
