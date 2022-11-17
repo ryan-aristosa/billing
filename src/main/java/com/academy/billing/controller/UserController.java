@@ -50,8 +50,8 @@ public class UserController extends BaseAuditClass {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUserEntity(@PathVariable Long id) throws RecordNotFoundException {
-        Long userId = userService.deleteUserEntity(id);
-        String message = "User id " + userId + " has been deleted";
+        String username = userService.deleteUserEntity(id);
+        String message = "User " + username + " has been deleted";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

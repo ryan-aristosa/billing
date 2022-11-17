@@ -15,5 +15,5 @@ public interface UserService {
 
     UserEntity updateUserEntity(Long id, UserEntity newUserEntity) throws RecordNotFoundException ;
 
-    Long deleteUserEntity(Long id) throws RecordNotFoundException;
+    String deleteUserEntity(Long id) throws RecordNotFoundException;
 }

@@ -64,10 +64,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public Long deleteUserEntity(Long id) throws RecordNotFoundException {
+    public String deleteUserEntity(Long id) throws RecordNotFoundException {
         return userRepository.findById(id).map(userEntity -> {
             userRepository.delete(userEntity);
-            return userEntity.getId();
+            return userEntity.getUsername();
         }).orElseThrow(RecordNotFoundException::new);
     }
 }
