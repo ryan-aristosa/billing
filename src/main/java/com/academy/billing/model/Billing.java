@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Billing extends BaseAuditClass{
+public class Billing extends BaseAuditClass {
 
     @Id
     @SequenceGenerator(name = "billingIdSeqGen", sequenceName = "billingIdSeq", initialValue = 10001)

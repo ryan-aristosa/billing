@@ -12,8 +12,8 @@ import java.util.Optional;
 public class JPAAuditingConfig {
 
     @Bean
-    public AuditorAware<String> auditorProvider(){
-        return () -> Optional.ofNullable("group1");
+    public AuditorAware<String> auditorProvider() {
+        return () -> Optional.of("group1");
     }
 
 }

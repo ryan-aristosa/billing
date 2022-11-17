@@ -16,4 +16,5 @@ public interface UserService {
     UserEntity updateUserEntity(Long id, UserEntity newUserEntity) throws UserNotFoundException;
 
     String deleteUserEntity(Long id) throws UserNotFoundException;
+
 }
