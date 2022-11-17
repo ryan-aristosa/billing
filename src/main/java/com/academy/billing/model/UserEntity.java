@@ -1,6 +1,6 @@
 package com.academy.billing.model;
 
-import com.academy.billing.enums.UserType;
+import com.academy.billing.enums.Role;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,6 +17,6 @@ public class UserEntity {
     private String password;
 
     @Enumerated(value = EnumType.STRING)
-    private UserType type;
+    private Role type;
 
 }

@@ -1,6 +1,6 @@
 package com.academy.billing.configuration;
 
-import com.academy.billing.enums.UserType;
+import com.academy.billing.enums.Role;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,8 +27,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 anonymous().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/billing/**").hasAnyRole(
-                        UserType.ADMIN.toString(), UserType.USER.toString())
-                .antMatchers("/billing/**").hasRole(UserType.ADMIN.toString())
+                        Role.ADMIN.toString(), Role.USER.toString())
+                .antMatchers("/billing/**").hasRole(Role.ADMIN.toString())
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
         http.headers().frameOptions().disable();
     }
