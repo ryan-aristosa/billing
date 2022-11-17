@@ -15,6 +15,6 @@ public interface BillingService {
 
     Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException ;
 
-    void deleteBilling(Long id) throws RecordNotFoundException;
+    Long  deleteBilling(Long id) throws RecordNotFoundException;
 
 }
