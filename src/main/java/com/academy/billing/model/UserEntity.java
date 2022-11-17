@@ -9,10 +9,12 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class UserEntity {
+public class UserEntity extends BaseAuditClass {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "userIdSeqGen", sequenceName = "userIdSeq", initialValue = 1001)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "userIdSeq")
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String username;
