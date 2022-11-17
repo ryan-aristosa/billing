@@ -1,6 +1,6 @@
 package com.academy.billing.service;
 
-import com.academy.billing.exception.RecordNotFoundException;
+import com.academy.billing.exception.BillingNotFoundException;
 import com.academy.billing.model.Billing;
 import com.academy.billing.repository.BillingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +26,25 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public Billing findBillingById(Long id) throws RecordNotFoundException {
-        return billingRepository.findById(id).orElseThrow(RecordNotFoundException::new);
+    public Billing findBillingById(Long id) throws BillingNotFoundException {
+        return billingRepository.findById(id).orElseThrow(BillingNotFoundException::new);
     }
 
     @Override
-    public Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException {
+    public Billing updateBilling(Long id, Billing newBilling) throws BillingNotFoundException {
         return billingRepository.findById(id).map(billing -> {
             billing.setAmount(newBilling.getAmount());
             billing.setType(newBilling.getType());
             return billingRepository.save(billing);
-        }).orElseThrow(RecordNotFoundException::new);
+        }).orElseThrow(BillingNotFoundException::new);
     }
 
     @Override
-    public Long deleteBilling(Long id) throws RecordNotFoundException {
+    public Long deleteBilling(Long id) throws BillingNotFoundException {
         return billingRepository.findById(id).map(billing -> {
             billingRepository.delete(billing);
             return billing.getId();
-        }).orElseThrow(RecordNotFoundException::new);
+        }).orElseThrow(BillingNotFoundException::new);
     }
 
 }

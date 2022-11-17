@@ -1,6 +1,6 @@
 package com.academy.billing.service;
 
-import com.academy.billing.exception.RecordNotFoundException;
+import com.academy.billing.exception.BillingNotFoundException;
 import com.academy.billing.model.Billing;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +11,10 @@ public interface BillingService {
 
     Page<Billing> findAllBillings(Pageable pageable);
 
-    Billing findBillingById(Long id) throws RecordNotFoundException;
+    Billing findBillingById(Long id) throws BillingNotFoundException;
 
-    Billing updateBilling(Long id, Billing newBilling) throws RecordNotFoundException ;
+    Billing updateBilling(Long id, Billing newBilling) throws BillingNotFoundException;
 
-    Long  deleteBilling(Long id) throws RecordNotFoundException;
+    Long  deleteBilling(Long id) throws BillingNotFoundException;
 
 }

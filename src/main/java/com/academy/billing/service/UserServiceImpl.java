@@ -1,7 +1,7 @@
 package com.academy.billing.service;
 
 import com.academy.billing.enums.Role;
-import com.academy.billing.exception.RecordNotFoundException;
+import com.academy.billing.exception.UserNotFoundException;
 import com.academy.billing.model.UserEntity;
 import com.academy.billing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,24 +50,24 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserEntity findUserEntityById(Long id) throws RecordNotFoundException {
-        return userRepository.findById(id).orElseThrow(RecordNotFoundException::new);
+    public UserEntity findUserEntityById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public UserEntity updateUserEntity(Long id, UserEntity newUserEntity) throws RecordNotFoundException {
+    public UserEntity updateUserEntity(Long id, UserEntity newUserEntity) throws UserNotFoundException {
         return userRepository.findById(id).map(billing -> {
             billing.setUsername(newUserEntity.getUsername());
             billing.setPassword(newUserEntity.getPassword());
             return userRepository.save(billing);
-        }).orElseThrow(RecordNotFoundException::new);
+        }).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public String deleteUserEntity(Long id) throws RecordNotFoundException {
+    public String deleteUserEntity(Long id) throws UserNotFoundException {
         return userRepository.findById(id).map(userEntity -> {
             userRepository.delete(userEntity);
             return userEntity.getUsername();
-        }).orElseThrow(RecordNotFoundException::new);
+        }).orElseThrow(UserNotFoundException::new);
     }
 }

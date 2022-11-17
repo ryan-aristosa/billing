@@ -1,6 +1,6 @@
 package com.academy.billing.controller;
 
-import com.academy.billing.exception.RecordNotFoundException;
+import com.academy.billing.exception.BillingNotFoundException;
 import com.academy.billing.model.Billing;
 import com.academy.billing.service.BillingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class BillingController {
 
     // Getting billing by id
     @GetMapping("/{id}")
-    public ResponseEntity<Billing> getBillingById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<Billing> getBillingById(@PathVariable Long id) throws BillingNotFoundException {
         Billing billingById = billingService.findBillingById(id);
         return new ResponseEntity<>(billingById, HttpStatus.OK);
     }
@@ -42,13 +42,13 @@ public class BillingController {
     public ResponseEntity<Billing> updateBilling(
             @PathVariable Long id,
             @RequestBody Billing newBilling
-    ) throws RecordNotFoundException {
+    ) throws BillingNotFoundException {
         Billing update = billingService.updateBilling(id, newBilling);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBilling(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> deleteBilling(@PathVariable Long id) throws BillingNotFoundException {
         Long idToDelete = billingService.deleteBilling(id);
         String deleteNotification = "Billing " + idToDelete + " has been deleted.";
         return new ResponseEntity<>(deleteNotification, HttpStatus.OK);

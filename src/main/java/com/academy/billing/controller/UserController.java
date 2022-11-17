@@ -1,7 +1,7 @@
 package com.academy.billing.controller;
 
 
-import com.academy.billing.exception.RecordNotFoundException;
+import com.academy.billing.exception.UserNotFoundException;
 import com.academy.billing.model.BaseAuditClass;
 import com.academy.billing.model.UserEntity;
 import com.academy.billing.service.UserService;
@@ -34,7 +34,7 @@ public class UserController extends BaseAuditClass {
 
     // Getting user by id
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserEntityById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<UserEntity> getUserEntityById(@PathVariable Long id) throws UserNotFoundException {
         UserEntity userById = userService.findUserEntityById(id);
         return new ResponseEntity<>(userById, HttpStatus.OK);
     }
@@ -43,13 +43,13 @@ public class UserController extends BaseAuditClass {
     public ResponseEntity<UserEntity> updateUserEntity(
             @PathVariable Long id,
             @RequestBody UserEntity newUserEntity
-    ) throws RecordNotFoundException {
+    ) throws UserNotFoundException {
         UserEntity update = userService.updateUserEntity(id, newUserEntity);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserEntity(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> deleteUserEntity(@PathVariable Long id) throws UserNotFoundException {
         String username = userService.deleteUserEntity(id);
         String message = "User " + username + " has been deleted";
         return new ResponseEntity<>(message, HttpStatus.OK);
