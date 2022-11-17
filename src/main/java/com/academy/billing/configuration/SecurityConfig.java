@@ -1,5 +1,6 @@
 package com.academy.billing.configuration;
 
+import com.academy.billing.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
