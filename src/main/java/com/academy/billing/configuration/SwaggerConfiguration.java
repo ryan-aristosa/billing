@@ -47,9 +47,7 @@ public class SwaggerConfiguration {
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
+        return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
     List<SecurityReference> defaultAuth() {

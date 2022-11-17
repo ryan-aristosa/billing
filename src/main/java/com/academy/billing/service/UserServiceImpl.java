@@ -22,22 +22,21 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserRepository userRepository;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid user");
         }
-        return new User(user.getUsername(), user.getPassword(), getAuthority(user));
+        return new User(user.getUsername(), user.getPassword(), getAuthority(user.getType()));
     }
 
-    private List<SimpleGrantedAuthority> getAuthority(UserEntity user) {
-        if (user.getType() == Role.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    private List<SimpleGrantedAuthority> getAuthority(Role role) {
+        return role == Role.ADMIN
+                ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                : List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
-
 
     @Override
     public UserEntity saveUserEntity(UserEntity userEntity) {
@@ -70,4 +69,5 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return userEntity.getUsername();
         }).orElseThrow(UserNotFoundException::new);
     }
+
 }

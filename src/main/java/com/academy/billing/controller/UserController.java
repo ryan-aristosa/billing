@@ -19,6 +19,7 @@ public class UserController extends BaseAuditClass {
     @Autowired
     private UserService userService;
 
+
     @PostMapping()
     public ResponseEntity<UserEntity> saveUserEntity(@RequestBody UserEntity user) {
         UserEntity saveUserEntity = userService.saveUserEntity(user);
