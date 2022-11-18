@@ -208,13 +208,11 @@ public class BillingControllerTest {
     void testDeleteBilling() throws Exception {
         //arrange
         String accessToken = obtainAccessToken("ruan7", "rU4n-dagreyt");
-        doNothing().when(billingServiceImpl).deleteBilling(id);
+        when(billingServiceImpl.deleteBilling(anyLong())).thenReturn(10001L);
         //act
         //assert
         mockMvc.perform(delete("/billing/{id}", id)
-                        .header("Authorization", "Bearer " + accessToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(test1)))
+                        .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk());
     }
 
