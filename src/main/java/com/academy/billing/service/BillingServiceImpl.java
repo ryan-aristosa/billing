@@ -27,7 +27,7 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public Billing findBillingById(Long id) throws BillingNotFoundException {
-        return billingRepository.findById(id).orElseThrow(() -> new BillingNotFoundException("Billing"));
+        return billingRepository.findById(id).orElseThrow(BillingNotFoundException::new);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BillingServiceImpl implements BillingService {
             billing.setAmount(newBilling.getAmount());
             billing.setType(newBilling.getType());
             return billingRepository.save(billing);
-        }).orElseThrow(() -> new BillingNotFoundException("Billing"));
+        }).orElseThrow(BillingNotFoundException::new);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BillingServiceImpl implements BillingService {
         return billingRepository.findById(id).map(billing -> {
             billingRepository.delete(billing);
             return billing.getId();
-        }).orElseThrow(() -> new BillingNotFoundException("Billing"));
+        }).orElseThrow(BillingNotFoundException::new);
     }
 
 }
