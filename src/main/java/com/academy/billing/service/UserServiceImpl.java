@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findById(id).map(user -> {
             user.setUsername(newUserEntity.getUsername());
             user.setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
+            user.setType(newUserEntity.getType());
             return userRepository.save(user);
         }).orElseThrow(UserNotFoundException::new);
     }
